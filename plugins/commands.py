@@ -192,6 +192,7 @@ async def start(client, message):
     if not files_:
         return await message.reply('No Such File Exist!')
     files = files_
+    cover = None
     settings = await get_settings(int(grp_id))
     if type_ != 'shortlink' and settings['shortlink'] and not await is_premium(message.from_user.id, client):
         link = await get_shortlink(settings['url'], settings['api'], f"https://t.me/{temp.U_NAME}?start=shortlink_{grp_id}_{file_id}")
@@ -209,6 +210,7 @@ async def start(client, message):
         file_size = get_size(files['file_size']),
         file_caption=files['caption']
     )
+    
     if IS_STREAM:
         btn = [[
             InlineKeyboardButton("✛ ᴡᴀᴛᴄʜ & ᴅᴏᴡɴʟᴏᴀᴅ ✛", callback_data=f"stream#{file_id}")
@@ -225,15 +227,9 @@ async def start(client, message):
         ],[
             InlineKeyboardButton('⁉️ ᴄʟᴏsᴇ ⁉️', callback_data='close_data')
         ]]
-        cover = random.choice(PICS)
-
-        await client.send_photo(
-        chat_id=message.from_user.id,
-        photo=cover,
-        caption=f"📂 {files['file_name']}"
-               )
     vp = await client.send_cached_media(
         chat_id=message.from_user.id,
+        cover=cover,
         file_id=file_id,
         caption=f_caption,
         protect_content=False,
