@@ -142,11 +142,13 @@ async def start(client, message):
             return await message.reply('No Such All Files Exist!')
         settings = await get_settings(int(grp_id))
         file_ids = []
+        cover = None
         total_files = await message.reply(f"<b><i>🗂 Total files - <code>{len(files)}</code></i></b>")
         for file in files:
             CAPTION = settings['caption']
             f_caption = CAPTION.format(
                 file_name=file['file_name'],
+                cover = files1.cover,
                 file_size=get_size(file['file_size']),
                 file_caption=file['caption']
             )      
