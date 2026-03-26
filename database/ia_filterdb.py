@@ -47,7 +47,8 @@ async def save_file(media):
         '_id': file_id,
         'file_name': file_name,
         'file_size': media.file_size,
-        'caption': file_caption
+        'caption': file_caption,
+        'cover': cover_to_use   # 👈 NEW FIELD
     }
     
     try:
