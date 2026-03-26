@@ -1,3 +1,4 @@
+import plugins.monkey_patch
 import logging
 logging.basicConfig(
     level=logging.INFO, 
