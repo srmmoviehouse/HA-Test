@@ -43,13 +43,15 @@ async def save_file(media):
     file_name = re.sub(r"@\w+|(_|\-|\.|\+)", " ", str(media.file_name))
     file_caption = re.sub(r"@\w+|(_|\-|\.|\+)", " ", str(media.caption))
     
-    document = {
-        '_id': file_id,
-        'file_name': file_name,
-        'file_size': media.file_size,
-        'caption': file_caption,
-        'cover': cover_to_use   # 👈 NEW FIELD
-    }
+    cover_to_use = getattr(getattr(media, "cover", None), "file_id", None)
+
+document = {
+    '_id': file_id,
+    'file_name': file_name,
+    'file_size': media.file_size,
+    'caption': file_caption,
+    'cover': cover_to_use   # 👈 yahi add karna hai
+}
     
     try:
         collection.insert_one(document)
